@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghana — Along the West African Gold Coast</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased; cursor: none; }
+
+/* --- Slides --- */
+.slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  display: none; align-items: center; justify-content: center; }
+.slide.active { display: flex; }
+
+/* Media slides */
+.slide-media img, .slide-media video {
+  width: 100%; height: 100%; object-fit: contain; background: #000; display: block; }
+
+/* Video navigation overlays */
+.video-nav { position: absolute; top: 0; width: 12%; height: 100%; display: flex;
+  align-items: center; justify-content: center; cursor: pointer; z-index: 10;
+  font-size: 3vw; color: rgba(255,255,255,0); transition: color 0.2s; }
+.video-nav:hover { color: rgba(255,255,255,0.7); }
+.video-nav-prev { left: 0; }
+.video-nav-next { right: 0; }
+
+/* Title slide */
+.slide-title { background: #000; }
+.title-content { text-align: center; }
+.ghana-flag { width: 20vw; height: 13.3vw; margin: 0 auto 3vh; position: relative;
+  border-radius: 0.4vw; overflow: hidden; box-shadow: 0 0.5vw 2vw rgba(0,0,0,0.5); }
+.flag-small { width: 12vw; height: 8vw; margin: 0 auto 2vh; }
+.flag-stripe { width: 100%; height: 33.333%; }
+.flag-red { background: #CE1126; }
+.flag-gold { background: #FCD116; position: relative; }
+.flag-green { background: #006B3F; }
+.flag-star { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-size: 4.5vw; color: #000; line-height: 1; }
+.flag-small .flag-star { font-size: 2.7vw; }
+.title-content h1 { font-size: 4.5vw; font-weight: 700; letter-spacing: -0.05vw;
+  margin-bottom: 1vh; line-height: 1.1; }
+.subtitle-de { font-size: 2vw; font-style: italic; color: #ccc; margin-bottom: 3vh; }
+.dates { font-size: 1.8vw; color: #FCD116; font-weight: 500; }
+
+/* Chapter title slides */
+.slide-chapter { background: linear-gradient(135deg, #006B3F 0%, #004d2e 100%); }
+.chapter-content { text-align: center; }
+.chapter-label { font-size: 1.5vw; text-transform: uppercase; letter-spacing: 0.5vw;
+  color: #FCD116; display: block; margin-bottom: 1.5vh; }
+.chapter-content h2 { font-size: 6vw; font-weight: 700; line-height: 1.1; }
+
+/* Content slides */
+.slide-content { background: #111; padding: 4vh 5vw; }
+.content-card { max-width: 85vw; width: 100%; }
+.content-card h2 { font-size: 3.5vw; font-weight: 700; margin-bottom: 3vh;
+  color: #FCD116; border-bottom: 0.15vw solid #333; padding-bottom: 1.5vh; }
+.fact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5vw; margin-bottom: 3vh; }
+.fact { background: #1a1a1a; border-radius: 0.8vw; padding: 2.5vh 1.5vw; text-align: center;
+  border: 1px solid #333; }
+.fact-value { font-size: 3.5vw; font-weight: 700; color: #FCD116; margin-bottom: 0.5vh; }
+.fact-label { font-size: 1.3vw; color: #aaa; }
+.content-note { font-size: 1.4vw; color: #999; line-height: 1.6; margin-top: 1vh; }
+.content-list { list-style: none; padding: 0; }
+.content-list li { font-size: 1.6vw; line-height: 1.5; margin-bottom: 2vh;
+  padding-left: 2vw; position: relative; color: #ddd; }
+.content-list li::before { content: ""; position: absolute; left: 0; top: 0.6vw;
+  width: 0.6vw; height: 0.6vw; background: #FCD116; border-radius: 50%; }
+.content-list li strong { color: #fff; }
+
+/* End slide */
+.slide-end { background: #000; }
+.end-content { text-align: center; }
+.end-content h2 { font-size: 5vw; font-weight: 700; margin-bottom: 1vh; }
+.end-subtitle { font-size: 2vw; color: #ccc; margin-bottom: 2vh; }
+.end-meta { font-size: 1.4vw; color: #666; }
+
+/* --- Progress bar --- */
+#progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 0.4vh;
+  background: #222; z-index: 100; opacity: 0; transition: opacity 0.3s; cursor: pointer; }
+#progress-bar:hover, body:hover #progress-bar { opacity: 1; }
+#progress-fill { height: 100%; background: #FCD116; transition: width 0.15s ease; width: 0%; }
+.chapter-marker { position: absolute; top: -2.5vh; width: 2px; height: 2.5vh;
+  background: #FCD116; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+#progress-bar:hover .chapter-marker { opacity: 0.6; }
+.chapter-marker-label { position: absolute; bottom: 3vh; left: 50%; transform: translateX(-50%);
+  white-space: nowrap; font-size: 1vw; color: #FCD116; opacity: 0; transition: opacity 0.3s;
+  pointer-events: none; }
+#progress-bar:hover .chapter-marker-label { opacity: 1; }
+
+/* --- TOC overlay --- */
+#toc-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.92); z-index: 200; display: none;
+  align-items: center; justify-content: center; }
+#toc-overlay.visible { display: flex; }
+#toc-box { text-align: center; }
+#toc-box h3 { font-size: 2.5vw; margin-bottom: 3vh; color: #FCD116; }
+.toc-entry { font-size: 1.8vw; padding: 1.2vh 3vw; cursor: pointer; border-radius: 0.5vw;
+  transition: background 0.15s; }
+.toc-entry:hover { background: rgba(252, 209, 22, 0.15); }
+
+/* --- Slide counter --- */
+#slide-counter { position: fixed; bottom: 1.5vh; right: 1.5vw; font-size: 1vw;
+  color: #555; z-index: 50; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+body:hover #slide-counter { opacity: 1; }
+
+/* Language selector slide */
+.slide-lang-select { background: #000; }
+.lang-select-content { text-align: center; }
+.lang-select-content h2 { font-size: 3vw; font-weight: 700; margin-bottom: 0.5vh; }
+.lang-select-sub { font-size: 1.8vw; color: #999; font-style: italic; margin-bottom: 5vh; }
+.lang-buttons { display: flex; gap: 3vw; justify-content: center; }
+.lang-btn { font-size: 2.2vw; padding: 2.5vh 4vw; border: 2px solid #FCD116; background: transparent;
+  color: #FCD116; border-radius: 1vw; cursor: pointer; font-family: inherit; font-weight: 600;
+  transition: background 0.2s, color 0.2s; }
+.lang-btn:hover { background: #FCD116; color: #000; }
+.nav-hint { font-size: 1.2vw; color: #555; margin-top: 2vh; }
+
+/* Language visibility */
+.lang-en, .lang-de { display: none; }
+body.show-en .lang-en { display: block; }
+body.show-de .lang-de { display: block; }
+span.lang-en, span.lang-de { display: none; }
+body.show-en span.lang-en { display: inline; }
+body.show-de span.lang-de { display: inline; }
+
+/* TOC content entries */
+.toc-content-entry { font-size: 1.4vw; color: #aaa; padding-left: 5vw; }
+
+/* Cursor visibility */
+body { cursor: none; }
+body:hover { cursor: default; }
+</style>
+</head>
+<body>
+
+  <div id="slideshow">
+    
+    <div class="slide slide-lang-select active" data-index="0">
+      <div class="lang-select-content">
+        <div class="ghana-flag">
+          <div class="flag-stripe flag-red"></div>
+          <div class="flag-stripe flag-gold">
+            <div class="flag-star">&#9733;</div>
+          </div>
+          <div class="flag-stripe flag-green"></div>
+        </div>
+        <h2>Choose your language</h2>
+        <p class="lang-select-sub">Sprache wählen</p>
+        <div class="lang-buttons">
+          <button class="lang-btn" data-lang="en">English</button>
+          <button class="lang-btn" data-lang="de">Deutsch</button>
+        </div>
+        <p class="nav-hint">Navigate with &#8592; &#8594; arrow keys</p>
+        <p class="nav-hint">Navigation mit den Pfeiltasten &#8592; &#8594;</p>
+      </div>
+    </div>
+
+    <div class="slide slide-title" data-index="1">
+      <div class="title-content">
+        <div class="ghana-flag">
+          <div class="flag-stripe flag-red"></div>
+          <div class="flag-stripe flag-gold">
+            <div class="flag-star">&#9733;</div>
+          </div>
+          <div class="flag-stripe flag-green"></div>
+        </div>
+        <div class="lang-en">
+          <h1>Along the West African Gold Coast</h1>
+          <p class="subtitle-de">Entlang der westafrikanischen Goldküste</p>
+          <p class="dates">27 February – 13 March 2026</p>
+        </div>
+        <div class="lang-de">
+          <h1>Entlang der westafrikanischen Goldküste</h1>
+          <p class="subtitle-de">Along the West African Gold Coast</p>
+          <p class="dates">27. Februar – 13. März 2026</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-chapter" data-index="2" data-chapter="1">
+      <div class="chapter-content">
+        <div class="lang-en">
+          <span class="chapter-label">Chapter 1</span>
+          <h2>Accra</h2>
+        </div>
+        <div class="lang-de">
+          <span class="chapter-label">Kapitel 1</span>
+          <h2>Accra</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-media" data-index="3">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_AF8701EC-C34A-497E-9770-D10AE918C22A.jpeg" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="4">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2589.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="5">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2590.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="6">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2591.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="7">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2593.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="8">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2594.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="9">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2595.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="10">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2596.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="11">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2597.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="12">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2599.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="13">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2600.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="14">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2601.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="15">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2602.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="16">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2604.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="17">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2605.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="18">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2606.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="19">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2607.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="20">
+      <video preload="none" controls playsinline>
+        <source src="IMG_2608.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="21">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2609.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="22">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2610.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="23">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2611.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="24">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2613.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="25">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2617.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="26">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2618.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="27">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2619.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="28">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2622.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="29">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2624.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="30">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2626.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="31">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="4f8e1102-f4eb-4167-8881-2d4b54b6e319.jpg" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="32">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2633.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="33">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2634.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="34">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2635.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="35">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2636.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="36">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2637.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="37">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2638.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="38">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2639.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="39">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2640.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="40">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2641.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="41">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2642.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="42">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2643.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="43">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2645.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="44">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2646.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="45">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2648.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="46">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2649.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="47">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2650.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="48">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2651.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="49">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2652.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="50">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2653.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="51">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2654.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="52">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2655.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="53">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2656.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="54">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2659.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="55">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2660.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="56">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2662.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="57">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2664.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="58">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2665.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="59">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2667.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="60">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2669.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="61">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2670.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="62">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2671.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="63">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2677.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="64">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2683.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="65">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2684.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="66">
+      <video preload="none" controls playsinline>
+        <source src="IMG_2685.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="67">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2691.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="68">
+      <video preload="none" controls playsinline>
+        <source src="IMG_3999.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="69">
+      <video preload="none" controls playsinline>
+        <source src="IMG_4002.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="70">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2698.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="71">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2701.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="72">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2711.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-content" data-index="73">
+      <div class="content-card">
+        <div class="lang-en">
+        <h2>Ghana at a Glance</h2>
+        <div class="fact-grid">
+          <div class="fact">
+            <div class="fact-value">34M</div>
+            <div class="fact-label">Population</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">$2,350</div>
+            <div class="fact-label">GDP per Capita</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">~23%</div>
+            <div class="fact-label">Inflation Rate</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">87%</div>
+            <div class="fact-label">Electricity Access</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">40%</div>
+            <div class="fact-label">Clean Water Access (rural)</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">2022</div>
+            <div class="fact-label">Sovereign Debt Restructuring</div>
+          </div>
+        </div>
+        <p class="content-note">Ghana's economy has been under severe strain since 2022, when the country defaulted on most of its external debt. An IMF programme and debt restructuring are ongoing. Inflation peaked above 50% in late 2022 and remains elevated.</p>
+        </div>
+        <div class="lang-de">
+        <h2>Ghana auf einen Blick</h2>
+        <div class="fact-grid">
+          <div class="fact">
+            <div class="fact-value">34 Mio.</div>
+            <div class="fact-label">Bevölkerung</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">$2.350</div>
+            <div class="fact-label">BIP pro Kopf</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">~23%</div>
+            <div class="fact-label">Inflationsrate</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">87%</div>
+            <div class="fact-label">Stromversorgung</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">40%</div>
+            <div class="fact-label">Trinkwasser (ländlich)</div>
+          </div>
+          <div class="fact">
+            <div class="fact-value">2022</div>
+            <div class="fact-label">Schuldenrestrukturierung</div>
+          </div>
+        </div>
+        <p class="content-note">Ghanas Wirtschaft steht seit 2022 unter schwerem Druck, als das Land den Großteil seiner Auslandsschulden nicht mehr bedienen konnte. Ein IWF-Programm und die Umschuldung laufen. Die Inflation erreichte Ende 2022 über 50% und bleibt hoch.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-content" data-index="74">
+      <div class="content-card">
+        <div class="lang-en">
+        <h2>Life in Ghana</h2>
+        <ul class="content-list">
+          <li><strong>Nutrition & development</strong> — Chronic malnutrition and limited access to quality education have measurable effects on cognitive development, particularly in rural areas.</li>
+          <li><strong>Food culture</strong> — Meals are built around starches (fufu, banku, rice) with stews. The emphasis is on caloric sustenance over variety. Western-style restaurants are rare outside Accra.</li>
+          <li><strong>Service & tourism</strong> — There is no established hospitality culture. Tourist-facing services can feel improvised, and accommodation prices often approach European levels without matching the quality.</li>
+          <li><strong>Infrastructure</strong> — Roads deteriorate quickly outside cities. Power outages ("dumsor") and unreliable water supply are everyday realities.</li>
+          <li><strong>Corruption</strong> — Pervasive and systemic: from roadside police stops to government procurement. Widely acknowledged by Ghanaians themselves.</li>
+          <li><strong>Democracy</strong> — A genuine bright spot. Ghana has had peaceful transfers of power since 1992, a free press, and an engaged electorate. The 2024 election saw a smooth opposition victory.</li>
+        </ul>
+        </div>
+        <div class="lang-de">
+        <h2>Leben in Ghana</h2>
+        <ul class="content-list">
+          <li><strong>Ernährung & Entwicklung</strong> — Chronische Unterernährung und eingeschränkter Zugang zu guter Bildung wirken sich messbar auf die kognitive Entwicklung aus, besonders in ländlichen Gebieten.</li>
+          <li><strong>Esskultur</strong> — Mahlzeiten basieren auf Stärkebeilagen (Fufu, Banku, Reis) mit Eintöpfen. Der Fokus liegt auf Sättigung, nicht auf Vielfalt. Restaurants westlichen Stils sind außerhalb Accras selten.</li>
+          <li><strong>Service & Tourismus</strong> — Es gibt keine gewachsene Gastgeberkultur. Touristische Angebote wirken oft improvisiert, und die Unterkunftspreise erreichen europäisches Niveau, ohne die Qualität zu bieten.</li>
+          <li><strong>Infrastruktur</strong> — Straßen verschlechtern sich schnell außerhalb der Städte. Stromausfälle („Dumsor") und unzuverlässige Wasserversorgung gehören zum Alltag.</li>
+          <li><strong>Korruption</strong> — Allgegenwärtig und systemisch: von Polizeikontrollen am Straßenrand bis zur Auftragsvergabe der Regierung. Wird von den Ghanaern selbst offen eingeräumt.</li>
+          <li><strong>Demokratie</strong> — Ein echter Lichtblick. Ghana hat seit 1992 friedliche Machtwechsel erlebt, eine freie Presse und eine engagierte Wählerschaft. Die Wahl 2024 brachte einen reibungslosen Oppositionssieg.</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-chapter" data-index="75" data-chapter="2">
+      <div class="chapter-content">
+        <div class="lang-en">
+          <span class="chapter-label">Chapter 2</span>
+          <h2>Elmina</h2>
+        </div>
+        <div class="lang-de">
+          <span class="chapter-label">Kapitel 2</span>
+          <h2>Elmina</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-media" data-index="76">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4015.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="77">
+      <video preload="none" controls playsinline>
+        <source src="IMG_4018.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="78">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2730.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="79">
+      <video preload="none" controls playsinline>
+        <source src="IMG_2736.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="80">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2738.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="81">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2744.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="82">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2748.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="83">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2781.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="84">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2787.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="85">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2788.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="86">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2790.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="87">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2800.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="88">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2807.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="89">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2824.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="90">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2825.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="91">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2837.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="92">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2846.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="93">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2847.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="94">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2854.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="95">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2865.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="96">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2867.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="97">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2870.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="98">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2871.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="99">
+      <video preload="none" controls playsinline>
+        <source src="IMG_2876.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-content" data-index="100">
+      <div class="content-card">
+        <div class="lang-en">
+        <h2>The Slave Forts</h2>
+        <ul class="content-list">
+          <li><strong>Scale</strong> — An estimated 12.5 million Africans were shipped across the Atlantic over roughly 400 years. Millions more died in capture and transit.</li>
+          <li><strong>Elmina Castle</strong> — Built by the Portuguese in 1482, it is the oldest European structure in sub-Saharan Africa. Later seized by the Dutch and used as a major slave-trading hub.</li>
+          <li><strong>Cape Coast Castle</strong> — The British headquarters of the Gold Coast slave trade. Its underground dungeons held up to 1,000 captives at a time in total darkness.</li>
+          <li><strong>The garrisons</strong> — Remarkably small European garrisons — often fewer than 100 men — controlled these massive operations, relying heavily on local intermediaries.</li>
+          <li><strong>African collaboration</strong> — Powerful states like the Ashanti Empire and Fante chiefs actively supplied war captives and kidnapped people to European traders. The trade reshaped regional power dynamics.</li>
+          <li><strong>Legacy</strong> — Centuries of depopulation, broken family and social structures, and economic extraction left lasting damage across West Africa that continues to shape the region today.</li>
+        </ul>
+        </div>
+        <div class="lang-de">
+        <h2>Die Sklavenfestungen</h2>
+        <ul class="content-list">
+          <li><strong>Ausmaß</strong> — Schätzungsweise 12,5 Millionen Afrikaner wurden über rund 400 Jahre über den Atlantik verschleppt. Millionen weitere starben bei Gefangennahme und Transport.</li>
+          <li><strong>Elmina Castle</strong> — 1482 von den Portugiesen erbaut, ist es das älteste europäische Bauwerk in Subsahara-Afrika. Später von den Niederländern übernommen und als bedeutendes Zentrum des Sklavenhandels genutzt.</li>
+          <li><strong>Cape Coast Castle</strong> — Das britische Hauptquartier des Sklavenhandels an der Goldküste. In seinen unterirdischen Kerkern wurden bis zu 1.000 Gefangene gleichzeitig in völliger Dunkelheit festgehalten.</li>
+          <li><strong>Die Garnisonen</strong> — Bemerkenswert kleine europäische Garnisonen — oft weniger als 100 Mann — kontrollierten diese massiven Operationen und stützten sich stark auf einheimische Mittelsmänner.</li>
+          <li><strong>Afrikanische Beteiligung</strong> — Mächtige Staaten wie das Ashanti-Reich und Fante-Häuptlinge lieferten aktiv Kriegsgefangene und entführte Menschen an europäische Händler. Der Handel veränderte die regionalen Machtverhältnisse grundlegend.</li>
+          <li><strong>Vermächtnis</strong> — Jahrhunderte der Entvölkerung, zerstörte Familien- und Sozialstrukturen sowie wirtschaftliche Ausbeutung hinterließen bleibende Schäden in Westafrika, die die Region bis heute prägen.</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-chapter" data-index="101" data-chapter="3">
+      <div class="chapter-content">
+        <div class="lang-en">
+          <span class="chapter-label">Chapter 3</span>
+          <h2>Cape Three Points</h2>
+        </div>
+        <div class="lang-de">
+          <span class="chapter-label">Kapitel 3</span>
+          <h2>Cape Three Points</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="102">
+      <video preload="none" controls playsinline>
+        <source src="IMG_4116.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="103">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4122.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="104">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2893.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="105">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4127.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="106">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2900.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="107">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2902.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="108">
+      <video preload="none" controls playsinline>
+        <source src="IMG_2904.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="109">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2908.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="110">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4137.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="111">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2913.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="112">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2964.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="113">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2983.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="114">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_2989.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="115">
+      <video preload="none" controls playsinline>
+        <source src="IMG_2999.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="116">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3005.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="117">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3009.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="118">
+      <video preload="none" controls playsinline>
+        <source src="IMG_3013.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="119">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3019.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="120">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3026.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="121">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3039.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="122">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3048.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="123">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3050.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="124">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3053.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="125">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3056.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="126">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4204.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="127">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4205.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="128">
+      <video preload="none" controls playsinline>
+        <source src="IMG_4207.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="129">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3068.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="130">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3073.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="131">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3078.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="132">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4214.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="133">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3096.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="134">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3098.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-content" data-index="135">
+      <div class="content-card">
+        <div class="lang-en">
+        <h2>Volunteering in Ghana</h2>
+        <ul class="content-list">
+          <li><strong>The model</strong> — "Voluntourism" is big business: participants pay NGOs or agencies for a placement, covering their own costs plus a fee. The NGO places them in schools, orphanages, or community projects.</li>
+          <li><strong>Questionable impact</strong> — Many placements provide unskilled labour that displaces local workers. Short stays (1–4 weeks) rarely produce lasting benefit. Some orphanages have been found to recruit children specifically to attract volunteers and donations.</li>
+          <li><strong>The case for meritocracy</strong> — The most powerful long-term contribution may not be hands-on work, but demonstrating meritocratic principles: the idea that effort, talent, and integrity should determine outcomes — not family connections, bribes, or tribal affiliations.</li>
+          <li><strong>Structural dependency</strong> — A steady flow of well-meaning foreigners can inadvertently reinforce dependency rather than building local capacity. The best programmes focus on training local people to lead.</li>
+        </ul>
+        </div>
+        <div class="lang-de">
+        <h2>Freiwilligenarbeit in Ghana</h2>
+        <ul class="content-list">
+          <li><strong>Das Modell</strong> — „Voluntourismus" ist ein großes Geschäft: Teilnehmer zahlen NGOs oder Agenturen für einen Einsatzplatz und tragen ihre eigenen Kosten plus eine Gebühr. Die NGO vermittelt sie an Schulen, Waisenhäuser oder Gemeindeprojekte.</li>
+          <li><strong>Fraglicher Nutzen</strong> — Viele Einsätze bieten ungelernte Arbeit, die lokale Arbeitskräfte verdrängt. Kurze Aufenthalte (1–4 Wochen) bringen selten nachhaltigen Nutzen. Manche Waisenhäuser werben gezielt Kinder an, um Freiwillige und Spenden anzuziehen.</li>
+          <li><strong>Leistungsprinzip</strong> — Der wirkungsvollste langfristige Beitrag ist möglicherweise nicht die praktische Arbeit, sondern das Vorleben meritokratischer Prinzipien: dass Leistung, Talent und Integrität über Ergebnisse entscheiden sollten — nicht Beziehungen, Bestechung oder Stammeszugehörigkeit.</li>
+          <li><strong>Strukturelle Abhängigkeit</strong> — Ein stetiger Strom gutmeinender Ausländer kann unbeabsichtigt Abhängigkeit verstärken, statt lokale Kapazitäten aufzubauen. Die besten Programme setzen darauf, Einheimische zu Führungskräften auszubilden.</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-chapter" data-index="136" data-chapter="4">
+      <div class="chapter-content">
+        <div class="lang-en">
+          <span class="chapter-label">Chapter 4</span>
+          <h2>Cape Coast / Return Journey</h2>
+        </div>
+        <div class="lang-de">
+          <span class="chapter-label">Kapitel 4</span>
+          <h2>Cape Coast / Rückreise</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide-media" data-index="137">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3119.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="138">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3123.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="139">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3125.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="140">
+      <video preload="none" controls playsinline>
+        <source src="IMG_4224.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="141">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3129.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="142">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3143.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="143">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3150.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="144">
+      <video preload="none" controls playsinline>
+        <source src="IMG_3155.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="145">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3169.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="146">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3185.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="147">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4246.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="148">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3202.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="149">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3209.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="150">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3214.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="151">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3216.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="152">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3218.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="153">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_4261.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="154">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3238.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="155">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="b10f8b5e-3061-4a3e-af03-ef2d6357cd4b.jpg" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="156">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3245.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="157">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3246.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="158">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3250.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="159">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3251.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="160">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3254.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="161">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3255.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media slide-video" data-index="162">
+      <video preload="none" controls playsinline>
+        <source src="IMG_3257.MOV">
+      </video>
+      <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
+      <div class="video-nav video-nav-next" data-dir="next">&#9654;</div>
+    </div>
+
+    <div class="slide slide-media" data-index="163">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3259.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="164">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3272.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-media" data-index="165">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="IMG_3276.JPG" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <div class="slide slide-end" data-index="166">
+      <div class="end-content">
+        <div class="ghana-flag flag-small">
+          <div class="flag-stripe flag-red"></div>
+          <div class="flag-stripe flag-gold">
+            <div class="flag-star">&#9733;</div>
+          </div>
+          <div class="flag-stripe flag-green"></div>
+        </div>
+        <h2>Medaase</h2>
+        <div class="lang-en">
+          <p class="end-subtitle">Thank you — Danke</p>
+          <p class="end-meta">Ghana, February–March 2026</p>
+        </div>
+        <div class="lang-de">
+          <p class="end-subtitle">Danke — Thank you</p>
+          <p class="end-meta">Ghana, Februar–März 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="progress-bar">
+    <div id="progress-fill"></div>
+  </div>
+
+  <div id="toc-overlay">
+    <div id="toc-box">
+      <h3><span class="lang-en">Table of Contents</span><span class="lang-de">Inhaltsverzeichnis</span></h3>
+      <div class="toc-entry" data-goto="1"><span class="lang-en">Title</span><span class="lang-de">Titel</span></div>
+        <div class="toc-entry" data-goto="2"><span class="lang-en">Chapter 1: Accra</span><span class="lang-de">Kapitel 1: Accra</span></div>
+        <div class="toc-entry" data-goto="75"><span class="lang-en">Chapter 2: Elmina</span><span class="lang-de">Kapitel 2: Elmina</span></div>
+        <div class="toc-entry" data-goto="101"><span class="lang-en">Chapter 3: Cape Three Points</span><span class="lang-de">Kapitel 3: Cape Three Points</span></div>
+        <div class="toc-entry" data-goto="136"><span class="lang-en">Chapter 4: Cape Coast / Return Journey</span><span class="lang-de">Kapitel 4: Cape Coast / Rückreise</span></div>
+        <div class="toc-entry toc-content-entry" data-goto="73"><span class="lang-en">Ghana at a Glance</span><span class="lang-de">Ghana auf einen Blick</span></div>
+        <div class="toc-entry toc-content-entry" data-goto="74"><span class="lang-en">Life in Ghana</span><span class="lang-de">Leben in Ghana</span></div>
+        <div class="toc-entry toc-content-entry" data-goto="100"><span class="lang-en">The Slave Forts</span><span class="lang-de">Die Sklavenfestungen</span></div>
+        <div class="toc-entry toc-content-entry" data-goto="135"><span class="lang-en">Volunteering in Ghana</span><span class="lang-de">Freiwilligenarbeit in Ghana</span></div>
+        <div class="toc-entry" data-goto="166"><span class="lang-en">End</span><span class="lang-de">Ende</span></div>
+    </div>
+  </div>
+
+  <div id="slide-counter"></div>
+
+<script>
+(function() {
+  const totalSlides = 167;
+  const chapterMarkers = [{"chapter":1,"pct":1.2,"name":"Accra"},{"chapter":2,"pct":45.2,"name":"Elmina"},{"chapter":3,"pct":60.8,"name":"Cape Three Points"},{"chapter":4,"pct":81.9,"name":"Cape Coast / Return Journey"},];
+  let current = 0;
+  let lang = 'en';
+
+  const slides = document.querySelectorAll('.slide');
+  const progressFill = document.getElementById('progress-fill');
+  const progressBar = document.getElementById('progress-bar');
+  const tocOverlay = document.getElementById('toc-overlay');
+  const slideCounter = document.getElementById('slide-counter');
+
+  // Language selection
+  function setLanguage(chosen) {
+    lang = chosen;
+    document.body.classList.remove('show-en', 'show-de');
+    document.body.classList.add('show-' + chosen);
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setLanguage(btn.dataset.lang);
+      showSlide(1); // advance to title slide
+    });
+  });
+
+  // Default to English
+  setLanguage('en');
+
+  // Add chapter markers to progress bar
+  chapterMarkers.forEach(m => {
+    const marker = document.createElement('div');
+    marker.className = 'chapter-marker';
+    marker.style.left = m.pct + '%';
+    const label = document.createElement('div');
+    label.className = 'chapter-marker-label';
+    label.textContent = m.name;
+    marker.appendChild(label);
+    progressBar.appendChild(marker);
+  });
+
+  function showSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+
+    // Pause any playing video on current slide
+    const currentSlide = slides[current];
+    const currentVideo = currentSlide.querySelector('video');
+    if (currentVideo) {
+      currentVideo.pause();
+    }
+
+    // Hide current, show new
+    slides[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+
+    // Lazy load current and next 2 images
+    for (let i = current; i < Math.min(current + 3, totalSlides); i++) {
+      const img = slides[i].querySelector('img[data-src]');
+      if (img) {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      }
+    }
+
+    // Auto-play video if navigated to a video slide
+    const newVideo = slides[current].querySelector('video');
+    if (newVideo) {
+      newVideo.currentTime = 0;
+      newVideo.muted = true;
+      newVideo.play().catch(() => {});
+    }
+
+    // Update progress
+    const pct = totalSlides > 1 ? (current / (totalSlides - 1)) * 100 : 0;
+    progressFill.style.width = pct + '%';
+    slideCounter.textContent = (current + 1) + ' / ' + totalSlides;
+  }
+
+  function next() { if (current === 0) return; showSlide(current + 1); }
+  function prev() { if (current <= 1) return; showSlide(current - 1); }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (tocOverlay.classList.contains('visible')) {
+      if (e.key === 'Escape' || e.key === 't' || e.key === 'T') {
+        tocOverlay.classList.remove('visible');
+      }
+      return;
+    }
+    switch(e.key) {
+      case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'Backspace': case 'PageUp':
+        e.preventDefault(); prev(); break;
+      case 'Home': e.preventDefault(); showSlide(1); break;
+      case 'End': e.preventDefault(); showSlide(totalSlides - 1); break;
+      case 't': case 'T':
+        tocOverlay.classList.toggle('visible'); break;
+      case 'f': case 'F':
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen();
+        }
+        break;
+      case 'Escape':
+        if (document.fullscreenElement) document.exitFullscreen();
+        break;
+    }
+  });
+
+  // Video overlay navigation
+  document.querySelectorAll('.video-nav').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (btn.dataset.dir === 'prev') prev(); else next();
+    });
+  });
+
+  // Click navigation (left 30% = back, right 70% = forward)
+  document.addEventListener('click', (e) => {
+    if (tocOverlay.classList.contains('visible')) return;
+    if (e.target.closest('#progress-bar') || e.target.closest('#toc-overlay') || e.target.closest('video') || e.target.closest('.lang-btn') || e.target.closest('.video-nav')) return;
+    // Don't navigate away from lang-select via click — must use buttons
+    if (current === 0) return;
+    const x = e.clientX / window.innerWidth;
+    if (x < 0.3) prev(); else next();
+  });
+
+  // Progress bar click-to-seek
+  progressBar.addEventListener('click', (e) => {
+    const pct = e.clientX / window.innerWidth;
+    const targetSlide = Math.round(pct * (totalSlides - 1));
+    showSlide(targetSlide);
+  });
+
+  // TOC entry clicks
+  document.querySelectorAll('.toc-entry').forEach(entry => {
+    entry.addEventListener('click', () => {
+      showSlide(parseInt(entry.dataset.goto));
+      tocOverlay.classList.remove('visible');
+    });
+  });
+
+  // Initialize first slide
+  showSlide(0);
+})();
+</script>
+</body>
+</html>
