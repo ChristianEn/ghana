@@ -1,0 +1,15 @@
+# Media files (too large for GitHub)
+*.JPG
+*.jpg
+*.jpeg
+*.MOV
+*.mov
+
+# Generated output
+slideshow.html
+
+# macOS
+.DS_Store
+
+# Claude Code
+.claude/
