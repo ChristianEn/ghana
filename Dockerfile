@@ -5,6 +5,8 @@ RUN git clone https://github.com/ChristianEn/ghana.git /app \
     && cd /app && git lfs pull
 
 FROM nginx:alpine
+RUN rm -f /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /usr/share/nginx/html
 RUN rm -f index.html 50x.html
 COPY --from=build /app/slideshow.html ./index.html
