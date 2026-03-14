@@ -121,6 +121,33 @@ def is_video(filename):
     return os.path.splitext(filename)[1].lower() == ".mov"
 
 
+def get_mov_rotation(filepath):
+    """Read rotation from MOV track header matrix (tkhd atom)."""
+    import struct, math
+    try:
+        with open(filepath, 'rb') as f:
+            data = f.read()
+        pos = 0
+        while pos < len(data) - 8:
+            idx = data.find(b'tkhd', pos)
+            if idx == -1:
+                break
+            version = data[idx + 4]
+            if version == 0:
+                matrix_offset = idx + 4 + 1 + 3 + 4 + 4 + 4 + 4 + 4 + 8 + 2 + 2 + 2 + 2
+            else:
+                matrix_offset = idx + 4 + 1 + 3 + 8 + 8 + 4 + 4 + 8 + 8 + 2 + 2 + 2 + 2
+            a = struct.unpack('>i', data[matrix_offset:matrix_offset + 4])[0] / 65536.0
+            b = struct.unpack('>i', data[matrix_offset + 4:matrix_offset + 8])[0] / 65536.0
+            rotation = round(math.degrees(math.atan2(b, a)))
+            if rotation != 0:
+                return rotation
+            pos = idx + 4
+    except Exception as e:
+        print(f"  Rotation detection error for {os.path.basename(filepath)}: {e}")
+    return 0
+
+
 def generate_html(chapters):
     """Generate the complete HTML slideshow."""
 
@@ -136,8 +163,11 @@ def generate_html(chapters):
     # --- Chapter 1: Accra ---
     slides.append({"type": "chapter", "chapter": 1, "name": CHAPTER_NAMES[1]})
     for filename, date in chapters[1]:
-        slides.append({"type": "video" if is_video(filename) else "image",
-                        "src": filename, "date": date})
+        if is_video(filename):
+            rotation = get_mov_rotation(os.path.join(MEDIA_DIR, filename))
+            slides.append({"type": "video", "src": filename, "date": date, "rotation": rotation})
+        else:
+            slides.append({"type": "image", "src": filename, "date": date})
 
     # --- Content: Ghana at a Glance ---
     slides.append({"type": "content", "id": "ghana-glance"})
@@ -148,8 +178,11 @@ def generate_html(chapters):
     # --- Chapter 2: Elmina ---
     slides.append({"type": "chapter", "chapter": 2, "name": CHAPTER_NAMES[2]})
     for filename, date in chapters[2]:
-        slides.append({"type": "video" if is_video(filename) else "image",
-                        "src": filename, "date": date})
+        if is_video(filename):
+            rotation = get_mov_rotation(os.path.join(MEDIA_DIR, filename))
+            slides.append({"type": "video", "src": filename, "date": date, "rotation": rotation})
+        else:
+            slides.append({"type": "image", "src": filename, "date": date})
 
     # --- Content: The Slave Forts ---
     slides.append({"type": "content", "id": "slave-forts"})
@@ -157,8 +190,11 @@ def generate_html(chapters):
     # --- Chapter 3: Cape Three Points ---
     slides.append({"type": "chapter", "chapter": 3, "name": CHAPTER_NAMES[3]})
     for filename, date in chapters[3]:
-        slides.append({"type": "video" if is_video(filename) else "image",
-                        "src": filename, "date": date})
+        if is_video(filename):
+            rotation = get_mov_rotation(os.path.join(MEDIA_DIR, filename))
+            slides.append({"type": "video", "src": filename, "date": date, "rotation": rotation})
+        else:
+            slides.append({"type": "image", "src": filename, "date": date})
 
     # --- Content: Volunteering in Ghana ---
     slides.append({"type": "content", "id": "volunteering"})
@@ -166,8 +202,11 @@ def generate_html(chapters):
     # --- Chapter 4: Cape Coast / Return ---
     slides.append({"type": "chapter", "chapter": 4, "name": CHAPTER_NAMES[4]})
     for filename, date in chapters[4]:
-        slides.append({"type": "video" if is_video(filename) else "image",
-                        "src": filename, "date": date})
+        if is_video(filename):
+            rotation = get_mov_rotation(os.path.join(MEDIA_DIR, filename))
+            slides.append({"type": "video", "src": filename, "date": date, "rotation": rotation})
+        else:
+            slides.append({"type": "image", "src": filename, "date": date})
 
     # --- End slide ---
     slides.append({"type": "end"})
@@ -273,9 +312,10 @@ def generate_html(chapters):
     </div>''')
 
         elif s["type"] == "video":
+            rot_attr = f' data-rotation="{s["rotation"]}"' if s.get("rotation") else ''
             slide_html_parts.append(f'''
     <div class="slide slide-media slide-video" data-index="{i}">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline{rot_attr}>
         <source src="{s['src']}">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -794,6 +834,33 @@ body:hover {{ cursor: default; }}
   const tocOverlay = document.getElementById('toc-overlay');
   const slideCounter = document.getElementById('slide-counter');
 
+  // Fix video rotation for browsers that ignore MOV rotation metadata (e.g. Tizen)
+  document.querySelectorAll('video[data-rotation]').forEach(video => {{
+    video.addEventListener('loadedmetadata', () => {{
+      const rot = parseInt(video.dataset.rotation);
+      if (!rot) return;
+      // If rotation is 90 or 270, a compliant browser reports swapped dimensions
+      // (videoWidth < videoHeight for portrait). If not swapped, browser ignored rotation.
+      const isPortraitRotation = (rot === 90 || rot === -90 || rot === 270 || rot === -270);
+      if (isPortraitRotation && video.videoWidth > video.videoHeight) {{
+        video.style.transform = 'rotate(' + rot + 'deg)';
+        // Scale to fit container after rotation (swap width/height)
+        const scale = Math.min(
+          video.parentElement.clientWidth / video.videoHeight,
+          video.parentElement.clientHeight / video.videoWidth
+        );
+        video.style.transform = 'rotate(' + rot + 'deg) scale(' + scale + ')';
+        video.style.objectFit = 'initial';
+        video.style.width = video.videoWidth + 'px';
+        video.style.height = video.videoHeight + 'px';
+        video.style.position = 'absolute';
+        video.style.top = '50%';
+        video.style.left = '50%';
+        video.style.transform = 'translate(-50%, -50%) rotate(' + rot + 'deg) scale(' + scale + ')';
+      }}
+    }}, {{once: true}});
+  }});
+
   // Language selection
   function setLanguage(chosen) {{
     lang = chosen;
@@ -852,8 +919,12 @@ body:hover {{ cursor: default; }}
     const newVideo = slides[current].querySelector('video');
     if (newVideo) {{
       newVideo.currentTime = 0;
-      newVideo.muted = true;
-      newVideo.play().catch(() => {{}});
+      newVideo.muted = false;
+      newVideo.play().catch(() => {{
+        // Autoplay with sound blocked — retry muted
+        newVideo.muted = true;
+        newVideo.play().catch(() => {{}});
+      }});
     }}
 
     // Update progress

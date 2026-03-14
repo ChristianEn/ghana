@@ -270,7 +270,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="20">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_2608.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -458,7 +458,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="66">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_2685.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -470,7 +470,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="68">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_3999.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -478,7 +478,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="69">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_4002.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -667,7 +667,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="79">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_2736.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -751,7 +751,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="99">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_2876.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -875,7 +875,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="108">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_2904.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -907,7 +907,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="115">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_2999.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -923,7 +923,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="118">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_3013.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -967,7 +967,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="128">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_4207.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -1099,7 +1099,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="144">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_3155.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -1175,7 +1175,7 @@ body:hover { cursor: default; }
     </div>
 
     <div class="slide slide-media slide-video" data-index="162">
-      <video preload="none" controls playsinline>
+      <video preload="none" controls playsinline data-rotation="90">
         <source src="IMG_3257.MOV">
       </video>
       <div class="video-nav video-nav-prev" data-dir="prev">&#9664;</div>
@@ -1251,6 +1251,33 @@ body:hover { cursor: default; }
   const tocOverlay = document.getElementById('toc-overlay');
   const slideCounter = document.getElementById('slide-counter');
 
+  // Fix video rotation for browsers that ignore MOV rotation metadata (e.g. Tizen)
+  document.querySelectorAll('video[data-rotation]').forEach(video => {
+    video.addEventListener('loadedmetadata', () => {
+      const rot = parseInt(video.dataset.rotation);
+      if (!rot) return;
+      // If rotation is 90 or 270, a compliant browser reports swapped dimensions
+      // (videoWidth < videoHeight for portrait). If not swapped, browser ignored rotation.
+      const isPortraitRotation = (rot === 90 || rot === -90 || rot === 270 || rot === -270);
+      if (isPortraitRotation && video.videoWidth > video.videoHeight) {
+        video.style.transform = 'rotate(' + rot + 'deg)';
+        // Scale to fit container after rotation (swap width/height)
+        const scale = Math.min(
+          video.parentElement.clientWidth / video.videoHeight,
+          video.parentElement.clientHeight / video.videoWidth
+        );
+        video.style.transform = 'rotate(' + rot + 'deg) scale(' + scale + ')';
+        video.style.objectFit = 'initial';
+        video.style.width = video.videoWidth + 'px';
+        video.style.height = video.videoHeight + 'px';
+        video.style.position = 'absolute';
+        video.style.top = '50%';
+        video.style.left = '50%';
+        video.style.transform = 'translate(-50%, -50%) rotate(' + rot + 'deg) scale(' + scale + ')';
+      }
+    }, {once: true});
+  });
+
   // Language selection
   function setLanguage(chosen) {
     lang = chosen;
@@ -1309,8 +1336,12 @@ body:hover { cursor: default; }
     const newVideo = slides[current].querySelector('video');
     if (newVideo) {
       newVideo.currentTime = 0;
-      newVideo.muted = true;
-      newVideo.play().catch(() => {});
+      newVideo.muted = false;
+      newVideo.play().catch(() => {
+        // Autoplay with sound blocked — retry muted
+        newVideo.muted = true;
+        newVideo.play().catch(() => {});
+      });
     }
 
     // Update progress
