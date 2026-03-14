@@ -70,6 +70,14 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; colo
   width: 0.6vw; height: 0.6vw; background: #FCD116; border-radius: 50%; }
 .content-list li strong { color: #fff; }
 
+/* Info card grid */
+.info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8vw; }
+.info-card { background: #1a1a1a; border-radius: 0.8vw; padding: 2vh 1.5vw;
+  border: 1px solid #333; border-left: 3px solid #FCD116; }
+.info-icon { font-size: 2.2vw; margin-bottom: 0.8vh; line-height: 1; }
+.info-title { font-size: 1.4vw; font-weight: 700; color: #fff; margin-bottom: 0.6vh; }
+.info-text { font-size: 1.15vw; color: #aaa; line-height: 1.5; }
+
 /* End slide */
 .slide-end { background: #000; }
 .end-content { text-align: center; }
@@ -558,25 +566,73 @@ body:hover { cursor: default; }
       <div class="content-card">
         <div class="lang-en">
         <h2>Life in Ghana</h2>
-        <ul class="content-list">
-          <li><strong>Nutrition & development</strong> — Chronic malnutrition and limited access to quality education have measurable effects on cognitive development, particularly in rural areas.</li>
-          <li><strong>Food culture</strong> — Meals are built around starches (fufu, banku, rice) with stews. The emphasis is on caloric sustenance over variety. Western-style restaurants are rare outside Accra.</li>
-          <li><strong>Service & tourism</strong> — There is no established hospitality culture. Tourist-facing services can feel improvised, and accommodation prices often approach European levels without matching the quality.</li>
-          <li><strong>Infrastructure</strong> — Roads deteriorate quickly outside cities. Power outages ("dumsor") and unreliable water supply are everyday realities.</li>
-          <li><strong>Corruption</strong> — Pervasive and systemic: from roadside police stops to government procurement. Widely acknowledged by Ghanaians themselves.</li>
-          <li><strong>Democracy</strong> — A genuine bright spot. Ghana has had peaceful transfers of power since 1992, a free press, and an engaged electorate. The 2024 election saw a smooth opposition victory.</li>
-        </ul>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">&#127793;</div>
+            <div class="info-title">Nutrition & Development</div>
+            <div class="info-text">Chronic malnutrition and limited access to quality education have measurable effects on cognitive development, particularly in rural areas.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#127858;</div>
+            <div class="info-title">Food Culture</div>
+            <div class="info-text">Meals are built around starches (fufu, banku, rice) with stews. The emphasis is on caloric sustenance over variety. Western-style restaurants are rare outside Accra.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#127962;</div>
+            <div class="info-title">Service & Tourism</div>
+            <div class="info-text">There is no established hospitality culture. Tourist-facing services can feel improvised, and accommodation prices often approach European levels without matching the quality.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#9889;</div>
+            <div class="info-title">Infrastructure</div>
+            <div class="info-text">Roads deteriorate quickly outside cities. Power outages (&ldquo;dumsor&rdquo;) and unreliable water supply are everyday realities.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#9878;&#65039;</div>
+            <div class="info-title">Corruption</div>
+            <div class="info-text">Pervasive and systemic: from roadside police stops to government procurement. Widely acknowledged by Ghanaians themselves.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#128499;&#65039;</div>
+            <div class="info-title">Democracy</div>
+            <div class="info-text">A genuine bright spot. Ghana has had peaceful transfers of power since 1992, a free press, and an engaged electorate. The 2024 election saw a smooth opposition victory.</div>
+          </div>
+        </div>
         </div>
         <div class="lang-de">
         <h2>Leben in Ghana</h2>
-        <ul class="content-list">
-          <li><strong>Ernährung & Entwicklung</strong> — Chronische Unterernährung und eingeschränkter Zugang zu guter Bildung wirken sich messbar auf die kognitive Entwicklung aus, besonders in ländlichen Gebieten.</li>
-          <li><strong>Esskultur</strong> — Mahlzeiten basieren auf Stärkebeilagen (Fufu, Banku, Reis) mit Eintöpfen. Der Fokus liegt auf Sättigung, nicht auf Vielfalt. Restaurants westlichen Stils sind außerhalb Accras selten.</li>
-          <li><strong>Service & Tourismus</strong> — Es gibt keine gewachsene Gastgeberkultur. Touristische Angebote wirken oft improvisiert, und die Unterkunftspreise erreichen europäisches Niveau, ohne die Qualität zu bieten.</li>
-          <li><strong>Infrastruktur</strong> — Straßen verschlechtern sich schnell außerhalb der Städte. Stromausfälle („Dumsor") und unzuverlässige Wasserversorgung gehören zum Alltag.</li>
-          <li><strong>Korruption</strong> — Allgegenwärtig und systemisch: von Polizeikontrollen am Straßenrand bis zur Auftragsvergabe der Regierung. Wird von den Ghanaern selbst offen eingeräumt.</li>
-          <li><strong>Demokratie</strong> — Ein echter Lichtblick. Ghana hat seit 1992 friedliche Machtwechsel erlebt, eine freie Presse und eine engagierte Wählerschaft. Die Wahl 2024 brachte einen reibungslosen Oppositionssieg.</li>
-        </ul>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">&#127793;</div>
+            <div class="info-title">Ernährung & Entwicklung</div>
+            <div class="info-text">Chronische Unterernährung und eingeschränkter Zugang zu guter Bildung wirken sich messbar auf die kognitive Entwicklung aus, besonders in ländlichen Gebieten.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#127858;</div>
+            <div class="info-title">Esskultur</div>
+            <div class="info-text">Mahlzeiten basieren auf Stärkebeilagen (Fufu, Banku, Reis) mit Eintöpfen. Der Fokus liegt auf Sättigung, nicht auf Vielfalt. Restaurants westlichen Stils sind außerhalb Accras selten.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#127962;</div>
+            <div class="info-title">Service & Tourismus</div>
+            <div class="info-text">Es gibt keine gewachsene Gastgeberkultur. Touristische Angebote wirken oft improvisiert, und die Unterkunftspreise erreichen europäisches Niveau, ohne die Qualität zu bieten.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#9889;</div>
+            <div class="info-title">Infrastruktur</div>
+            <div class="info-text">Straßen verschlechtern sich schnell außerhalb der Städte. Stromausfälle (&bdquo;Dumsor&ldquo;) und unzuverlässige Wasserversorgung gehören zum Alltag.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#9878;&#65039;</div>
+            <div class="info-title">Korruption</div>
+            <div class="info-text">Allgegenwärtig und systemisch: von Polizeikontrollen am Straßenrand bis zur Auftragsvergabe der Regierung. Wird von den Ghanaern selbst offen eingeräumt.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#128499;&#65039;</div>
+            <div class="info-title">Demokratie</div>
+            <div class="info-text">Ein echter Lichtblick. Ghana hat seit 1992 friedliche Machtwechsel erlebt, eine freie Presse und eine engagierte Wählerschaft. Die Wahl 2024 brachte einen reibungslosen Oppositionssieg.</div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -706,25 +762,73 @@ body:hover { cursor: default; }
       <div class="content-card">
         <div class="lang-en">
         <h2>The Slave Forts</h2>
-        <ul class="content-list">
-          <li><strong>Scale</strong> — An estimated 12.5 million Africans were shipped across the Atlantic over roughly 400 years. Millions more died in capture and transit.</li>
-          <li><strong>Elmina Castle</strong> — Built by the Portuguese in 1482, it is the oldest European structure in sub-Saharan Africa. Later seized by the Dutch and used as a major slave-trading hub.</li>
-          <li><strong>Cape Coast Castle</strong> — The British headquarters of the Gold Coast slave trade. Its underground dungeons held up to 1,000 captives at a time in total darkness.</li>
-          <li><strong>The garrisons</strong> — Remarkably small European garrisons — often fewer than 100 men — controlled these massive operations, relying heavily on local intermediaries.</li>
-          <li><strong>African collaboration</strong> — Powerful states like the Ashanti Empire and Fante chiefs actively supplied war captives and kidnapped people to European traders. The trade reshaped regional power dynamics.</li>
-          <li><strong>Legacy</strong> — Centuries of depopulation, broken family and social structures, and economic extraction left lasting damage across West Africa that continues to shape the region today.</li>
-        </ul>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">&#9875;</div>
+            <div class="info-title">Scale</div>
+            <div class="info-text">An estimated 12.5 million Africans were shipped across the Atlantic over roughly 400 years. Millions more died in capture and transit.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#127984;</div>
+            <div class="info-title">Elmina Castle</div>
+            <div class="info-text">Built by the Portuguese in 1482, it is the oldest European structure in sub-Saharan Africa. Later seized by the Dutch and used as a major slave-trading hub.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#128274;</div>
+            <div class="info-title">Cape Coast Castle</div>
+            <div class="info-text">The British headquarters of the Gold Coast slave trade. Its underground dungeons held up to 1,000 captives at a time in total darkness.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#9876;&#65039;</div>
+            <div class="info-title">The Garrisons</div>
+            <div class="info-text">Remarkably small European garrisons &mdash; often fewer than 100 men &mdash; controlled these massive operations, relying heavily on local intermediaries.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#129309;</div>
+            <div class="info-title">African Collaboration</div>
+            <div class="info-text">Powerful states like the Ashanti Empire and Fante chiefs actively supplied war captives and kidnapped people to European traders. The trade reshaped regional power dynamics.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#128337;</div>
+            <div class="info-title">Legacy</div>
+            <div class="info-text">Centuries of depopulation, broken family and social structures, and economic extraction left lasting damage across West Africa that continues to shape the region today.</div>
+          </div>
+        </div>
         </div>
         <div class="lang-de">
         <h2>Die Sklavenfestungen</h2>
-        <ul class="content-list">
-          <li><strong>Ausmaß</strong> — Schätzungsweise 12,5 Millionen Afrikaner wurden über rund 400 Jahre über den Atlantik verschleppt. Millionen weitere starben bei Gefangennahme und Transport.</li>
-          <li><strong>Elmina Castle</strong> — 1482 von den Portugiesen erbaut, ist es das älteste europäische Bauwerk in Subsahara-Afrika. Später von den Niederländern übernommen und als bedeutendes Zentrum des Sklavenhandels genutzt.</li>
-          <li><strong>Cape Coast Castle</strong> — Das britische Hauptquartier des Sklavenhandels an der Goldküste. In seinen unterirdischen Kerkern wurden bis zu 1.000 Gefangene gleichzeitig in völliger Dunkelheit festgehalten.</li>
-          <li><strong>Die Garnisonen</strong> — Bemerkenswert kleine europäische Garnisonen — oft weniger als 100 Mann — kontrollierten diese massiven Operationen und stützten sich stark auf einheimische Mittelsmänner.</li>
-          <li><strong>Afrikanische Beteiligung</strong> — Mächtige Staaten wie das Ashanti-Reich und Fante-Häuptlinge lieferten aktiv Kriegsgefangene und entführte Menschen an europäische Händler. Der Handel veränderte die regionalen Machtverhältnisse grundlegend.</li>
-          <li><strong>Vermächtnis</strong> — Jahrhunderte der Entvölkerung, zerstörte Familien- und Sozialstrukturen sowie wirtschaftliche Ausbeutung hinterließen bleibende Schäden in Westafrika, die die Region bis heute prägen.</li>
-        </ul>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">&#9875;</div>
+            <div class="info-title">Ausma&szlig;</div>
+            <div class="info-text">Sch&auml;tzungsweise 12,5 Millionen Afrikaner wurden &uuml;ber rund 400 Jahre &uuml;ber den Atlantik verschleppt. Millionen weitere starben bei Gefangennahme und Transport.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#127984;</div>
+            <div class="info-title">Elmina Castle</div>
+            <div class="info-text">1482 von den Portugiesen erbaut, ist es das &auml;lteste europ&auml;ische Bauwerk in Subsahara-Afrika. Sp&auml;ter von den Niederl&auml;ndern &uuml;bernommen und als bedeutendes Zentrum des Sklavenhandels genutzt.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#128274;</div>
+            <div class="info-title">Cape Coast Castle</div>
+            <div class="info-text">Das britische Hauptquartier des Sklavenhandels an der Goldk&uuml;ste. In seinen unterirdischen Kerkern wurden bis zu 1.000 Gefangene gleichzeitig in v&ouml;lliger Dunkelheit festgehalten.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#9876;&#65039;</div>
+            <div class="info-title">Die Garnisonen</div>
+            <div class="info-text">Bemerkenswert kleine europ&auml;ische Garnisonen &mdash; oft weniger als 100 Mann &mdash; kontrollierten diese massiven Operationen und st&uuml;tzten sich stark auf einheimische Mittelsm&auml;nner.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#129309;</div>
+            <div class="info-title">Afrikanische Beteiligung</div>
+            <div class="info-text">M&auml;chtige Staaten wie das Ashanti-Reich und Fante-H&auml;uptlinge lieferten aktiv Kriegsgefangene und entf&uuml;hrte Menschen an europ&auml;ische H&auml;ndler. Der Handel ver&auml;nderte die regionalen Machtverh&auml;ltnisse grundlegend.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#128337;</div>
+            <div class="info-title">Verm&auml;chtnis</div>
+            <div class="info-text">Jahrhunderte der Entv&ouml;lkerung, zerst&ouml;rte Familien- und Sozialstrukturen sowie wirtschaftliche Ausbeutung hinterlie&szlig;en bleibende Sch&auml;den in Westafrika, die die Region bis heute pr&auml;gen.</div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -898,21 +1002,53 @@ body:hover { cursor: default; }
       <div class="content-card">
         <div class="lang-en">
         <h2>Volunteering in Ghana</h2>
-        <ul class="content-list">
-          <li><strong>The model</strong> — "Voluntourism" is big business: participants pay NGOs or agencies for a placement, covering their own costs plus a fee. The NGO places them in schools, orphanages, or community projects.</li>
-          <li><strong>Questionable impact</strong> — Many placements provide unskilled labour that displaces local workers. Short stays (1–4 weeks) rarely produce lasting benefit. Some orphanages have been found to recruit children specifically to attract volunteers and donations.</li>
-          <li><strong>The case for meritocracy</strong> — The most powerful long-term contribution may not be hands-on work, but demonstrating meritocratic principles: the idea that effort, talent, and integrity should determine outcomes — not family connections, bribes, or tribal affiliations.</li>
-          <li><strong>Structural dependency</strong> — A steady flow of well-meaning foreigners can inadvertently reinforce dependency rather than building local capacity. The best programmes focus on training local people to lead.</li>
-        </ul>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">&#128176;</div>
+            <div class="info-title">The Model</div>
+            <div class="info-text">&ldquo;Voluntourism&rdquo; is big business: participants pay NGOs or agencies for a placement, covering their own costs plus a fee. The NGO places them in schools, orphanages, or community projects.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#10067;</div>
+            <div class="info-title">Questionable Impact</div>
+            <div class="info-text">Many placements provide unskilled labour that displaces local workers. Short stays (1&ndash;4 weeks) rarely produce lasting benefit. Some orphanages have been found to recruit children specifically to attract volunteers and donations.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#11088;</div>
+            <div class="info-title">The Case for Meritocracy</div>
+            <div class="info-text">The most powerful long-term contribution may not be hands-on work, but demonstrating meritocratic principles: the idea that effort, talent, and integrity should determine outcomes &mdash; not family connections, bribes, or tribal affiliations.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#128279;</div>
+            <div class="info-title">Structural Dependency</div>
+            <div class="info-text">A steady flow of well-meaning foreigners can inadvertently reinforce dependency rather than building local capacity. The best programmes focus on training local people to lead.</div>
+          </div>
+        </div>
         </div>
         <div class="lang-de">
         <h2>Freiwilligenarbeit in Ghana</h2>
-        <ul class="content-list">
-          <li><strong>Das Modell</strong> — „Voluntourismus" ist ein großes Geschäft: Teilnehmer zahlen NGOs oder Agenturen für einen Einsatzplatz und tragen ihre eigenen Kosten plus eine Gebühr. Die NGO vermittelt sie an Schulen, Waisenhäuser oder Gemeindeprojekte.</li>
-          <li><strong>Fraglicher Nutzen</strong> — Viele Einsätze bieten ungelernte Arbeit, die lokale Arbeitskräfte verdrängt. Kurze Aufenthalte (1–4 Wochen) bringen selten nachhaltigen Nutzen. Manche Waisenhäuser werben gezielt Kinder an, um Freiwillige und Spenden anzuziehen.</li>
-          <li><strong>Leistungsprinzip</strong> — Der wirkungsvollste langfristige Beitrag ist möglicherweise nicht die praktische Arbeit, sondern das Vorleben meritokratischer Prinzipien: dass Leistung, Talent und Integrität über Ergebnisse entscheiden sollten — nicht Beziehungen, Bestechung oder Stammeszugehörigkeit.</li>
-          <li><strong>Strukturelle Abhängigkeit</strong> — Ein stetiger Strom gutmeinender Ausländer kann unbeabsichtigt Abhängigkeit verstärken, statt lokale Kapazitäten aufzubauen. Die besten Programme setzen darauf, Einheimische zu Führungskräften auszubilden.</li>
-        </ul>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">&#128176;</div>
+            <div class="info-title">Das Modell</div>
+            <div class="info-text">&bdquo;Voluntourismus&ldquo; ist ein gro&szlig;es Gesch&auml;ft: Teilnehmer zahlen NGOs oder Agenturen f&uuml;r einen Einsatzplatz und tragen ihre eigenen Kosten plus eine Geb&uuml;hr. Die NGO vermittelt sie an Schulen, Waisenh&auml;user oder Gemeindeprojekte.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#10067;</div>
+            <div class="info-title">Fraglicher Nutzen</div>
+            <div class="info-text">Viele Eins&auml;tze bieten ungelernte Arbeit, die lokale Arbeitskr&auml;fte verdr&auml;ngt. Kurze Aufenthalte (1&ndash;4 Wochen) bringen selten nachhaltigen Nutzen. Manche Waisenh&auml;user werben gezielt Kinder an, um Freiwillige und Spenden anzuziehen.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#11088;</div>
+            <div class="info-title">Leistungsprinzip</div>
+            <div class="info-text">Der wirkungsvollste langfristige Beitrag ist m&ouml;glicherweise nicht die praktische Arbeit, sondern das Vorleben meritokratischer Prinzipien: dass Leistung, Talent und Integrit&auml;t &uuml;ber Ergebnisse entscheiden sollten &mdash; nicht Beziehungen, Bestechung oder Stammeszugeh&ouml;rigkeit.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">&#128279;</div>
+            <div class="info-title">Strukturelle Abh&auml;ngigkeit</div>
+            <div class="info-text">Ein stetiger Strom gutmeinender Ausl&auml;nder kann unbeabsichtigt Abh&auml;ngigkeit verst&auml;rken, statt lokale Kapazit&auml;ten aufzubauen. Die besten Programme setzen darauf, Einheimische zu F&uuml;hrungskr&auml;ften auszubilden.</div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
